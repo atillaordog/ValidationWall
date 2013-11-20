@@ -6,7 +6,7 @@ use ValidationWall\Rule\Rule as Rule;
 
 class NotEmpty extends Rule
 {
-	public function validate($field, Array $data = array())
+	public function validate($field, Array $data = array(), $against = null)
 	{
 		$this->_error_message = ucfirst($field).' cannot be empty.';
 		
