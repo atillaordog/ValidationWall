@@ -16,7 +16,8 @@ function autoload($class)
 		return FALSE;
 	}
 	
-	$class = str_replace('ValidationWall'.DIRECTORY_SEPARATOR, '', $class);
+	$class = str_replace('ValidationWall\\', '', $class);
+	$class = str_replace('\\', '/', $class);
 	
 	$is_file = false;
 	if ( file_exists(VALIDATIONWALL_ROOT.'src'.DIRECTORY_SEPARATOR.$class.'.php') )
