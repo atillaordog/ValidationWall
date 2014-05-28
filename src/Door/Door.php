@@ -33,7 +33,8 @@ abstract class Door implements DoorInterface
 			if ( !$ruleset->pass($data) )
 			{
 				$this->_pass = false;
-				$this->_errors[$ruleset->getField()] = $ruleset->getErrors();
+				$ruleset_errors = $ruleset->getErrors();
+				$this->_errors[$ruleset->getField()] = $ruleset_errors[$ruleset->getField()];
 			}
 		}
 		
