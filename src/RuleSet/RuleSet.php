@@ -28,8 +28,6 @@ abstract class RuleSet implements RuleSetInterface
 		}
 		
 		$this->_rules = $rules;
-		
-		$this->_errors[$field] = array();
 	}
 	
 	public function pass(Array $data = array())
@@ -44,7 +42,8 @@ abstract class RuleSet implements RuleSetInterface
 			if ( !$rule->validate($this->_field, $data) )
 			{
 				$this->_pass = false;
-				$this->_errors[$this->_field][] = $rule->_error_message;
+				$this->_errors[$this->_field] = $rule->_error_message;
+				break;
 			}
 		}
 		
