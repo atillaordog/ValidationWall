@@ -12,5 +12,5 @@ abstract class Rule implements RuleInterface
 	
 	public $_error_message;
 	
-	abstract public function validate($field, Array $data, $against);
+	abstract public function validate($field, Array $data);
 }
