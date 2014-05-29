@@ -6,8 +6,17 @@ use ValidationWall\Rule\Rule as Rule;
 
 class Email extends Rule
 {
-	public function validate($field, Array $data = array(), $against = false)
+	private $_strict = false;
+	
+	public function __construct($strict = false)
 	{
+		$this->_strict = (boolean)$strict;
+	}
+	
+	public function validate($field, Array $data = array())
+	{
+		$this->_error_message = ucfirst($field).' is not a valid email.';
+		
 		// Validate only if exists in incoming data
 		if ( !array_key_exists($field, $data) )
 		{
@@ -16,15 +25,12 @@ class Email extends Rule
 		
 		$this->_variable = $data[$field];
 		
-		// In this case against is used to see if checking is strict or not
-		$strict = (boolean)$against;
-		
 		if ( strlen($this->_variable) > 254 )
 		{
 			return FALSE;
 		}
 
-		if ( $strict === TRUE )
+		if ( $this->_strict === TRUE )
 		{
 			$qtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]';
 			$dtext = '[^\\x0d\\x5b-\\x5d\\x80-\\xff]';
@@ -44,7 +50,7 @@ class Email extends Rule
 		{
 			$expression = '/^[-_a-z0-9\'+*$^&%=~!?{}]++(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+@(?:(?![-.])[-a-z0-9.]+(?<![-.])\.[a-z]{2,6}|\d{1,3}(?:\.\d{1,3}){3})$/iD';
 		}
-
-		return (bool) preg_match($expression, $this->_variable);
+		
+		return preg_match($expression, $this->_variable) > 0;
 	}
 }
