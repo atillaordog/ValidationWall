@@ -6,7 +6,7 @@ use ValidationWall\Rule\Rule as Rule;
 
 class Url extends Rule
 {
-	public function validate($field, Array $data = array(), $against = null)
+	public function validate($field, Array $data = array())
 	{
 		// Validate only if exists in incoming data
 		if ( !array_key_exists($field, $data) )
