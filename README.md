@@ -11,14 +11,38 @@ A door is the way trough the Wall, the whole data gets through it by using rules
 
 How to use:
 
+```php
 include('ValidationWall/autoload.php');
 
+// Before the class you need to define the uses
+use ValidationWall;
+use ValidationWall\RuleSet\PredefRuleset;
+use ValidationWall\Door\PredefDoor;
+use ValidationWall\Rule\NotEmpty;
+use ValidationWall\Rule\Numeric;
 
-use ValidationWall\Door\Test as Test_Door;
-$vw = new ValidationWall(new Test_Door());
+// Build a ruleset using rules
+$rulesets = array();
+$rulesets[] = new PredefRuleset('input_field', array(new NotEmpty(), new Numeric()))
 
-var_dump($vw->pass(array('a' => 'a')));
+$door = new PredefDoor($rulesets);
+		
+$vw = new ValidationWall($door);
+
+if ( $vw->pass($data) )
+{
+	// Validation passed
+}
+else
+{
+	// Validation failed
+}
+```
 
 To pass a comparison variable, or another field from post for comparison, use the Rule's constructor as seen in predefined examples.
+
+```php
+$rule = new MaxLength(255);
+```
 
 
